@@ -1,0 +1,43 @@
+import yaml
+from graphviz import Digraph
+
+def create_tree(data, parent_key=None):
+    """
+    Recursively create a decision tree based on the YAML data.
+    Returns a list of Graphviz nodes and edges.
+    """
+    nodes = []
+    edges = []
+    for item in data:
+        for key, value in item.items():
+            node_id = f"{parent_key}_{key}" if parent_key else key
+            if isinstance(value, dict):
+                # Create a new node for this decision
+                nodes.append((node_id, {"label": key, "shape": "diamond"}))
+                # Recursively create the sub-tree
+                sub_nodes, sub_edges = create_tree([value], node_id)
+                nodes += sub_nodes
+                edges += [(node_id, sub_nodes[0][0])] + sub_edges
+            else:
+                # Create a new node for this outcome
+                nodes.append((f"{node_id}_{value}", {"label": value, "shape": "box"}))
+                # Connect it to the last decision node
+                if edges:
+                    edges[-1] = (edges[-1][0], nodes[-1][0])
+                else:
+                    edges.append(("Start", nodes[-1][0]))
+    return nodes, edges
+
+if __name__ == "__main__":
+    # Load the YAML data from file
+    with open("decision_tree.yml", "r") as f:
+        data = yaml.safe_load(f)
+    # Create the decision tree graph
+    dot = Digraph(comment="Decision Tree")
+    dot.node("Start", shape="none")
+    nodes, edges = create_tree(data)
+    for node in nodes:
+        dot.node(*node)
+    for edge in edges:
+        dot.edge(*edge)
+    dot.render("tree.gv", format="png", view=True)
