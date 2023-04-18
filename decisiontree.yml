@@ -1,0 +1,24 @@
+#Note that the structure of the decision tree is stored in the decision_tree object, 
+#with each node represented by an object that contains either a question (if it is a non-leaf node)
+# or an answer (if it is a leaf node). The children array contains the child nodes of the current node,
+# and the result property is used to store the classification result for a leaf node.
+
+decision_tree:
+  question: Outlook
+  children:
+    - answer: Overcast
+      result: Yes
+    - question: Humidity
+      children:
+        - answer: Normal
+          result: Yes
+        - answer: High
+          result: No
+      answer: Sunny
+    - question: Wind
+      children:
+        - answer: Weak
+          result: Yes
+        - answer: Strong
+          result: No
+      answer: Rain

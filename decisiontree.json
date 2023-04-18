@@ -1,0 +1,40 @@
+
+{
+    "decision_tree": {
+    "question": "Outlook",
+    "children": [
+        {
+        "answer": "Overcast",
+        "result": "Yes"
+        },
+        {
+        "question": "Humidity",
+        "children": [
+            {
+            "answer": "Normal",
+            "result": "Yes"
+            },
+            {
+            "answer": "High",
+            "result": "No"
+            }
+        ],
+        "answer": "Sunny"
+        },
+        {
+        "question": "Wind",
+        "children": [
+            {
+            "answer": "Weak",
+            "result": "Yes"
+            },
+            {
+            "answer": "Strong",
+            "result": "No"
+            }
+        ],
+        "answer": "Rain"
+        }
+    ]
+    }
+}
