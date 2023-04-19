@@ -2,7 +2,7 @@ import math
 
 def entropy(data):
     """
-    This function takes in a list of target values and calculates the entropy
+    This function takes in a list of target values and calculates entropy
     """
     total = len(data)
     counts = {}
